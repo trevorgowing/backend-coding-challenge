@@ -4,6 +4,7 @@ import java.time.LocalTime
 plugins {
     id "idea"
     id "java"
+    id "jacoco"
     id "application"
     id "net.ltgt.apt" version "0.13"
     id "org.flywaydb.flyway" version "5.0.7"
@@ -29,6 +30,20 @@ dependencies {
     testCompile "org.springframework.boot:spring-boot-starter-test"
 
     testRuntime "com.h2database:h2:1.4.196"
+}
+
+test {
+    testLogging {
+        events "failed"
+        exceptionFormat "full"
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
 }
 
 /**
