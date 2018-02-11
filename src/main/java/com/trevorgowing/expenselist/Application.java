@@ -1,4 +1,4 @@
-package com.trevorgowing.engagebcc;
+package com.trevorgowing.expenselist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
