@@ -2,8 +2,24 @@ plugins {
     id "idea"
     id "java"
     id "application"
+    id "net.ltgt.apt" version "0.13"
+    id "org.springframework.boot" version "1.5.10.RELEASE"
 }
 
 repositories {
     jcenter()
+}
+
+dependencies {
+    apt "org.projectlombok:lombok:1.16.20"
+    compileOnly "org.projectlombok:lombok:1.16.20"
+
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+
+    testCompile "io.rest-assured:rest-assured:3.0.7"
+    testCompile "io.rest-assured:spring-mock-mvc:3.0.7"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+
+    testRuntime "com.h2database:h2:1.4.196"
 }
