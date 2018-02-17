@@ -28,6 +28,9 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.3"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.3"
 
+    testApt "org.projectlombok:lombok:1.16.20"
+    testCompileOnly "org.projectlombok:lombok:1.16.20"
+
     testCompile "io.rest-assured:rest-assured:3.0.7"
     testCompile "io.rest-assured:spring-mock-mvc:3.0.7"
     testCompile "org.springframework.boot:spring-boot-starter-test"
