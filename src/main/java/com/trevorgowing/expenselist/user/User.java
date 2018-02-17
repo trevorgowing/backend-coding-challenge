@@ -33,6 +33,10 @@ public class User extends AbstractAuditable<User, Long> {
 
   private String lastName;
 
+  private User(Long id) {
+    super(id);
+  }
+
   private User(Long id, String email, String password, String firstName, String lastName) {
     super(id);
     this.email = email;
@@ -43,6 +47,10 @@ public class User extends AbstractAuditable<User, Long> {
 
   static User unidentifiedUser(String email, String password, String firstName, String lastName) {
     return new User(email, password, firstName, lastName);
+  }
+
+  public static User identifiedUser(Long id) {
+    return new User(id);
   }
 
   static User identifiedUser(Long id, String email, String password, String firstName, String lastName) {
