@@ -1,15 +1,5 @@
 package com.trevorgowing.expenselist.user;
 
-import com.trevorgowing.expenselist.common.types.AbstractControllerUnitTests;
-import io.restassured.http.ContentType;
-import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.http.HttpStatus;
-
-import java.util.Collections;
-import java.util.List;
-
 import static com.trevorgowing.expenselist.common.converters.ObjectToJSONConverter.convertToJSON;
 import static com.trevorgowing.expenselist.user.DuplicateEmailExceptionBuilder.aDuplicateEmailException;
 import static com.trevorgowing.expenselist.user.IdentifiedUserDTOBuilder.anIdentifiedUserDTO;
@@ -25,6 +15,15 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
+
+import com.trevorgowing.expenselist.common.types.AbstractControllerUnitTests;
+import io.restassured.http.ContentType;
+import java.util.Collections;
+import java.util.List;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.http.HttpStatus;
 
 public class UserControllerUnitTests extends AbstractControllerUnitTests {
 
@@ -48,7 +47,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
   }
 
   @Test
-  public void testGetUsersWithNoExistingUsers_shouldRespondWithStatusOKAndReturnNoUsers() throws Exception {
+  public void testGetUsersWithNoExistingUsers_shouldRespondWithStatusOKAndReturnNoUsers()  {
     // Set up expectations
     when(userRetriever.findIdentifiedUserDTOs()).thenReturn(Collections.emptyList());
 
@@ -56,7 +55,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
     given()
         .accept(ContentType.JSON)
     .when()
-        .get("/users")
+        .get("/app/users")
     .then()
         .log().all()
         .statusCode(HttpStatus.OK.value())
@@ -70,7 +69,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
   }
 
   @Test
-  public void testGetUsersWithExistingUsers_shouldRespondWithStatusOKAndReturnUsers() throws Exception {
+  public void testGetUsersWithExistingUsers_shouldRespondWithStatusOKAndReturnUsers()  {
     // Set up fixture
     IdentifiedUserDTO identifiedUserOneDTO = anIdentifiedUserDTO()
         .email("userone@engagetech.com")
@@ -95,7 +94,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
     given()
         .accept(ContentType.JSON)
     .when()
-        .get("/users")
+        .get("/app/users")
     .then()
         .log().all()
         .statusCode(HttpStatus.OK.value())
@@ -119,7 +118,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
     given()
         .accept(ContentType.JSON)
     .when()
-        .get("/users" + "/" + userId)
+        .get("/app/users/" + userId)
     .then()
         .log().all()
         .statusCode(HttpStatus.NOT_FOUND.value());
@@ -128,7 +127,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
   }
 
   @Test
-  public void testGetUserWithMatchingUser_shouldRespondWithStatusOKAndReturnUser() throws Exception {
+  public void testGetUserWithMatchingUser_shouldRespondWithStatusOKAndReturnUser()  {
     // Set up fixture
     Long userId = 1L;
 
@@ -147,7 +146,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
     given()
         .accept(ContentType.JSON)
     .when()
-        .get("/users" + "/" + userId)
+        .get("/app/users/" + userId)
     .then()
         .log().all()
         .statusCode(HttpStatus.OK.value())
@@ -161,7 +160,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
   }
 
   @Test(expected = DuplicateEmailException.class)
-  public void testPostUserWithDuplicateEmail_shouldRespondWithStatusConflict() throws Exception {
+  public void testPostUserWithDuplicateEmail_shouldRespondWithStatusConflict()  {
     // Set up fixture
     String email = "duplicate@engagetech.com";
     String password = "password";
@@ -188,7 +187,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
         .contentType(ContentType.JSON)
         .body(convertToJSON(unidentifiedUserDTO))
     .when()
-        .post("/users")
+        .post("/app/users")
     .then()
         .log().all()
         .statusCode(HttpStatus.CONFLICT.value());
@@ -198,7 +197,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
 
   @Test
   public void testPostUserWithUniqueEmail_shouldRespondWithStatusCreatedAndReturnCreatedUser()
-      throws Exception {
+       {
     // Set up fixture
     Long userId = 1L;
     String email = "unique@engagetech.com";
@@ -241,7 +240,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
         .contentType(ContentType.JSON)
         .body(convertToJSON(unidentifiedUserDTO))
     .when()
-        .post("/users")
+        .post("/app/users")
     .then()
         .log().all()
         .contentType(ContentType.JSON)
@@ -255,7 +254,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
   }
 
   @Test(expected = UserNotFoundException.class)
-  public void testPutUserWithNoMatchingUser_shouldRespondWithStatusNotFound() throws Exception {
+  public void testPutUserWithNoMatchingUser_shouldRespondWithStatusNotFound()  {
     // Set up fixture
     Long userId = 1L;
     String email = "unique@engagetech.com";
@@ -285,7 +284,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
         .contentType(ContentType.JSON)
         .body(convertToJSON(identifiedUserDTO))
     .when()
-        .put("/users" + "/" + userId)
+        .put("/app/users/" + userId)
     .then()
         .log().all()
         .statusCode(HttpStatus.NOT_FOUND.value());
@@ -294,7 +293,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
   }
 
   @Test(expected = DuplicateEmailException.class)
-  public void testPutUserWithDuplicateEmail_shouldRespondWithStatusConflict() throws Exception {
+  public void testPutUserWithDuplicateEmail_shouldRespondWithStatusConflict()  {
     // Set up fixture
     Long userId = 1L;
     String email = "unique@engagetech.com";
@@ -324,7 +323,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
         .contentType(ContentType.JSON)
         .body(convertToJSON(identifiedUserDTO))
     .when()
-    .put("/users" + "/" + userId)
+    .put("/app/users/" + userId)
         .then()
         .log().all()
         .statusCode(HttpStatus.CONFLICT.value());
@@ -334,7 +333,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
 
   @Test
   public void testPutUserWithValidUser_shouldRespondWithStatusOKAndReturnTheUpdatedUser()
-      throws Exception {
+       {
     // Set up fixture
     Long userId = 1L;
     String email = "unique@engagetech.com";
@@ -378,7 +377,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
         .contentType(ContentType.JSON)
         .body(convertToJSON(identifiedUserDTO))
     .when()
-        .put("/users" + "/" + userId)
+        .put("/app/users/" + userId)
     .then()
         .log().all()
         .contentType(ContentType.JSON)
@@ -401,7 +400,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
     // Exercise SUT
     given()
     .when()
-        .delete("/users" + "/" + userId)
+        .delete("/app/users/" + userId)
     .then()
         .log().all()
         .statusCode(HttpStatus.NOT_FOUND.value());
@@ -419,7 +418,7 @@ public class UserControllerUnitTests extends AbstractControllerUnitTests {
     // Exercise SUT
     given()
     .when()
-        .delete("/users" + "/" + userId)
+        .delete("/app/users/" + userId)
     .then()
         .log().all()
         .statusCode(HttpStatus.NO_CONTENT.value());
