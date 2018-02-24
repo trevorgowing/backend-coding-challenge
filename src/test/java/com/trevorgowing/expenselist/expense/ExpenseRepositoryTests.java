@@ -27,7 +27,7 @@ public class ExpenseRepositoryTests extends AbstractRepositoryIntegrationTests {
         .build();
 
     Expense expense = anExpense()
-        .date(Instant.EPOCH)
+        .date(Instant.parse("2018-02-17T14:30:00Z"))
         .amount(new BigDecimal("80.00"))
         .vat(new BigDecimal("20.00"))
         .reason("reason one")
@@ -44,7 +44,7 @@ public class ExpenseRepositoryTests extends AbstractRepositoryIntegrationTests {
         .build();
 
     Expense anotherExpense = anExpense()
-        .date(Instant.MAX)
+        .date(Instant.parse("2018-02-24T14:30:00Z"))
         .amount(new BigDecimal("800.00"))
         .vat(new BigDecimal("200.00"))
         .reason("reason two")
@@ -72,7 +72,7 @@ public class ExpenseRepositoryTests extends AbstractRepositoryIntegrationTests {
         .build();
 
     Expense expense = anExpense()
-        .date(Instant.EPOCH)
+        .date(Instant.parse("2018-02-17T14:30:00Z"))
         .amount(new BigDecimal("80.00"))
         .vat(new BigDecimal("20.00"))
         .reason("reason one")
@@ -89,7 +89,7 @@ public class ExpenseRepositoryTests extends AbstractRepositoryIntegrationTests {
         .build();
 
     anExpense()
-        .date(Instant.MAX)
+        .date(Instant.parse("2018-02-24T14:30:00Z"))
         .amount(new BigDecimal("800.00"))
         .vat(new BigDecimal("200.00"))
         .reason("reason two")
