@@ -13,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @MappedSuperclass
 @NoArgsConstructor
@@ -30,7 +30,7 @@ public abstract class AbstractAuditable<U, PK extends Serializable> extends Abst
   @Basic(optional = false)
   @Column(nullable = false, name = "app_created_date")
   @CreatedDate
-  private LocalDateTime createdDate;
+  private Instant createdDate;
 
   @JoinColumn(name = "app_last_modified_by_id")
   @ManyToOne(fetch = FetchType.LAZY)
@@ -38,7 +38,7 @@ public abstract class AbstractAuditable<U, PK extends Serializable> extends Abst
 
   @Column(name = "app_last_modified_date")
   @LastModifiedDate
-  private LocalDateTime lastModifiedDate;
+  private Instant lastModifiedDate;
 
   protected AbstractAuditable(PK id) {
     super(id);
@@ -55,12 +55,12 @@ public abstract class AbstractAuditable<U, PK extends Serializable> extends Abst
   }
 
   @Override
-  public LocalDateTime getCreatedDate() {
+  public Instant getCreatedDate() {
     return createdDate;
   }
 
   @Override
-  public void setCreatedDate(LocalDateTime createdDate) {
+  public void setCreatedDate(Instant createdDate) {
     this.createdDate = createdDate;
   }
 
@@ -75,12 +75,12 @@ public abstract class AbstractAuditable<U, PK extends Serializable> extends Abst
   }
 
   @Override
-  public LocalDateTime getLastModifiedDate() {
+  public Instant getLastModifiedDate() {
     return lastModifiedDate;
   }
 
   @Override
-  public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+  public void setLastModifiedDate(Instant lastModifiedDate) {
     this.lastModifiedDate = lastModifiedDate;
   }
 }
